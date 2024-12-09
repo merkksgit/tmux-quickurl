@@ -2,6 +2,10 @@
 
 A simple tmux plugin that helps you quickly open URLs from a predefined list using fzf.
 
+## Preview
+
+![preview](./preview.png)
+
 ## Requirements
 
 - [tmux](https://github.com/tmux/tmux)
