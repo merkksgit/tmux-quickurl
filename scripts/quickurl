@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+URL_FILE="$HOME/.quickurls"
+
+# Create URL file if it doesn't exist
+touch "$URL_FILE"
+
+# Main function to show fzf window and open selected URL
+show_url_picker() {
+    if [ ! -s "$URL_FILE" ]; then
+        tmux display-message "URL file is empty. Add URLs to ~/.quickurls"
+        return 1
+    fi
+
+    # Read URLs from file, number them, and show in fzf
+    selected_url=$(nl -w1 -s'. ' "$URL_FILE" | fzf-tmux -p 50% --prompt="Select URL: " | sed 's/^[0-9]*\. //')
+    
+    if [ -n "$selected_url" ]; then
+        xdg-open "$selected_url"
+        tmux display-message "Opening: $selected_url"
+    fi
+}
+
+# Run the main function
+show_url_picker
