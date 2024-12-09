@@ -4,8 +4,9 @@ A simple tmux plugin that helps you quickly open URLs from a predefined list usi
 
 ## Requirements
 
-- tmux
-- fzf
+- [tmux](https://github.com/tmux/tmux)
+- [fzf](https://github.com/junegunn/fzf)
+- [tpm](https://github.com/tmux-plugins/tpm)
 - xdg-open (usually pre-installed on Linux)
 
 ## Installation
@@ -25,6 +26,10 @@ Add this line to your `~/.tmux.conf`:
 ```tmux
 run-shell ~/.tmux/plugins/tmux-quickurl/tmux-quickurl.tmux
 ```
+
+## Update with TPM
+
+Press `prefix` + `U` (capital U) to update this plugin along with other TPM plugins.
 
 ## Usage
 
