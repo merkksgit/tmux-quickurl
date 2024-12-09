@@ -15,7 +15,7 @@ A simple tmux plugin that helps you quickly open URLs from a predefined list usi
 Add this line to your `~/.tmux.conf`:
 
 ```tmux
-set -g @plugin 'yourusername/tmux-quickurl'
+set -g @plugin 'merkksgit/tmux-quickurl'
 ```
 
 Press `prefix` + `I` to install the plugin.
