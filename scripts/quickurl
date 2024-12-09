@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 URL_FILE="$HOME/.quickurls"
 
@@ -14,11 +13,31 @@ show_url_picker() {
     fi
 
     # Read URLs from file, number them, and show in fzf
-    selected_url=$(nl -w1 -s'. ' "$URL_FILE" | fzf-tmux -p 50% --prompt="Select URL: " | sed 's/^[0-9]*\. //')
+    selected_urls=$(nl -w1 -s'. ' "$URL_FILE" | fzf-tmux -p 50% \
+        --multi \
+        --bind 'tab:toggle-out' \
+        --bind 'shift-tab:toggle-in' \
+        --header 'TAB to select multiple URLs, ENTER to open' \
+        --prompt="Select URL: " |
+        sed 's/^[0-9]*\. //')
     
-    if [ -n "$selected_url" ]; then
-        xdg-open "$selected_url"
-        tmux display-message "Opening: $selected_url"
+    if [ -n "$selected_urls" ]; then
+        # Count selected URLs
+        url_count=$(echo "$selected_urls" | wc -l)
+        
+        # Open each selected URL
+        while IFS= read -r url; do
+            if [ -n "$url" ]; then
+                xdg-open "$url"
+            fi
+        done <<< "$selected_urls"
+        
+        # Show message with count
+        if [ "$url_count" -eq 1 ]; then
+            tmux display-message "Opening: $selected_urls"
+        else
+            tmux display-message "Opening $url_count URLs"
+        fi
     fi
 }
 
