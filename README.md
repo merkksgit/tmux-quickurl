@@ -66,6 +66,17 @@ You can change the default key binding in your `.tmux.conf`:
 set -g @quickurl-key 'U'  # Changes the key binding to prefix + U
 ```
 
+## Debugging
+
+The plugin logs activity to `/tmp/url_opener.log` to help troubleshoot issues. This log includes:
+
+- Session start timestamps
+- URL selections
+- URL opening attempts
+- xdg-open outputs and errors
+
+If you experience any issues like tmux freezes or URLs not opening, check this log file for error messages.
+
 ## License
 
 [MIT License](https://mit-license.org/)
