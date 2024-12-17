@@ -1,13 +1,19 @@
 #!/usr/bin/env bash
+
+# When you experience a freeze, check /tmp/url_opener.log
+
 CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 URL_FILE="$HOME/.quickurls"
+LOG_FILE="/tmp/url_opener.log"
 
 # Create URL file if it doesn't exist
 touch "$URL_FILE"
 
-# Main function to show fzf window and open selected URL
+echo "Starting new session $(date)" > "$LOG_FILE"
+
 show_url_picker() {
     if [ ! -s "$URL_FILE" ]; then
+        echo "$(date): URL file empty" >> "$LOG_FILE"
         tmux display-message "URL file is empty. Add URLs to ~/.quickurls"
         return 1
     fi
@@ -22,17 +28,16 @@ show_url_picker() {
         sed 's/^[0-9]*\. //')
     
     if [ -n "$selected_urls" ]; then
-        # Count selected URLs
         url_count=$(echo "$selected_urls" | wc -l)
+        echo "$(date): Selected $url_count URLs" >> "$LOG_FILE"
         
-        # Open each selected URL
         while IFS= read -r url; do
             if [ -n "$url" ]; then
-                xdg-open "$url" &
+                echo "$(date): Opening URL: $url" >> "$LOG_FILE"
+                xdg-open "$url" >> "$LOG_FILE" 2>&1 &
             fi
         done <<< "$selected_urls"
         
-        # Show message with count
         if [ "$url_count" -eq 1 ]; then
             tmux display-message "Opening: $selected_urls"
         else
@@ -41,5 +46,4 @@ show_url_picker() {
     fi
 }
 
-# Run the main function
 show_url_picker
