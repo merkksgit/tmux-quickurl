@@ -28,7 +28,7 @@ show_url_picker() {
         # Open each selected URL
         while IFS= read -r url; do
             if [ -n "$url" ]; then
-                xdg-open "$url"
+                xdg-open "$url" &
             fi
         done <<< "$selected_urls"
         
