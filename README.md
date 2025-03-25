@@ -80,7 +80,3 @@ The plugin logs activity to `/tmp/url_opener.log` to help troubleshoot issues. T
 - xdg-open outputs and errors
 
 If you experience any issues like tmux freezes or URLs not opening, check this log file for error messages.
-
-## License
-
-[MIT License](https://mit-license.org/)
